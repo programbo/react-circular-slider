@@ -2,9 +2,6 @@ import * as React from 'react'
 
 import DefaultRing from './components/DefaultRing'
 import DefaultDraggable from './components/DefaultDraggable'
-// const DefaultDraggable = (props) => {
-//   return <circle ></circle>
-// }
 
 export interface CircularSliderProps {
   className?: string
@@ -24,14 +21,14 @@ class CircularSlider extends React.Component<CircularSliderProps, {}> {
   public static defaultProps: CircularSliderProps = {
     draggable: undefined,
     endAngle: 360,
-    height: 100,
+    height: 200,
     motion: 'once',
     onMove: value => {},
     onMoveEnd: value => {},
     radius: 360,
     startAngle: 0,
     value: 0,
-    width: 100,
+    width: 200,
   }
 
   render() {
@@ -39,8 +36,8 @@ class CircularSlider extends React.Component<CircularSliderProps, {}> {
     return (
       <svg className={this.props.className} viewBox={`0 0 ${this.props.width} ${this.props.height}`}>
         {this.props.children}
-        <DefaultRing padding={10} radius={40} thickness={10} />
-        <DefaultDraggable size={30} />
+        <DefaultRing padding={10} radius={90} thickness={20} />
+        <DefaultDraggable size={40} />
       </svg>
     )
   }
