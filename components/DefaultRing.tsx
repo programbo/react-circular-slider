@@ -9,8 +9,8 @@ export interface DefaultRingProps {
 
 const DefaultRing = ({ padding = 10, radius = 80, thickness = 20 }: DefaultRingProps): JSX.Element => {
   const arcData = arc()({
-    innerRadius: radius - thickness,
-    outerRadius: radius,
+    innerRadius: radius - thickness / 2,
+    outerRadius: radius + thickness / 2,
     startAngle: 0,
     endAngle: Math.PI * 2,
     padAngle: 0,
