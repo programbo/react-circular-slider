@@ -93,18 +93,6 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
     this.props.onMove && this.props.onMove({ coordinates: startPosition, value: this.props.value! })
   }
 
-  // public componentDidUpdate() {
-  //   const startPosition = calculateRadialPositionFromValue(
-  //     this.center!,
-  //     this.props.radius! + this.props.draggableOffset!,
-  //     this.props.value,
-  //     this.props.minValue,
-  //     this.props.maxValue,
-  //   )
-
-  //   this.props.onMove && this.props.onMove({ coordinates: startPosition, value: this.props.value! })
-  // }
-
   public render() {
     const Draggable = this.props.draggable
     return (

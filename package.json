@@ -8,6 +8,7 @@
     "test": "test"
   },
   "dependencies": {
+    "d3-scale": "^1.0.6",
     "d3-shape": "^1.2.0",
     "react": "^16.0.0"
   },
