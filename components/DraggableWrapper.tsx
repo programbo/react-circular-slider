@@ -8,15 +8,21 @@ export interface DraggableProps {
   children?: any
 }
 
+const defaultStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+}
+
 const DraggableWrapper: React.SFC<DraggableProps> = ({
   children: Draggable = <DefaultDraggable size={40} />,
   onMouseDown,
   onTouchStart,
 }) => {
   return (
-    <g onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
+    <div style={defaultStyle} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
       {Draggable}
-    </g>
+    </div>
   )
 }
 

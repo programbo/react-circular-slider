@@ -4,6 +4,8 @@ import { absoluteMousePosition, absoluteTouchPosition, pauseEvent } from './help
 import {
   angleToValue,
   calculateOrigin,
+  calculateAngleBetweenPoints,
+  calculateAngleDelta,
   calculateAngleFromOrigin,
   calculateRadialPosition,
   calculateRadialPositionFromValue,
@@ -20,6 +22,7 @@ import DraggableWrapper from './components/DraggableWrapper'
 export interface MovementResponse {
   coordinates: Point
   value: number
+  pressed: boolean
 }
 export interface SliderProps {
   className?: string
@@ -37,10 +40,6 @@ export interface SliderProps {
 
 export interface SliderState {
   pressed: boolean
-}
-
-export interface SliderStyles {
-  [index: string]: React.CSSProperties
 }
 
 class CircularSlider extends React.Component<SliderProps, SliderState> {
@@ -61,15 +60,20 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
     pressed: false,
   }
 
-  private styles: SliderStyles = {
-    container: { backgroundColor: 'red' },
+  private defaultStyle: React.CSSProperties = {
+    position: 'relative',
   }
 
   private center: Point
 
   private padding: number
 
-  private container: SVGSVGElement | null
+  private container: HTMLDivElement | null
+
+  private coordinates: Point
+
+  private angle = 0
+  private value: number
 
   public constructor(props: SliderProps) {
     super(props)
@@ -79,6 +83,7 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
       x: this.props.radius! + this.padding!,
       y: this.props.radius! + this.padding!,
     }
+    this.value = this.props.value || 0
   }
 
   public componentDidMount() {
@@ -90,25 +95,23 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
       this.props.maxValue,
     )
 
-    this.props.onMove && this.props.onMove({ coordinates: startPosition, value: this.props.value! })
+    this.props.onMove &&
+      this.props.onMove({ coordinates: startPosition, pressed: this.state.pressed, value: this.props.value! })
   }
 
   public render() {
     const Draggable = this.props.draggable
     return (
-      <svg
+      <div
         className={this.props.className}
-        width={this.props.size}
-        height={this.props.size}
-        viewBox={`0 0 ${this.props.size} ${this.props.size}`}
         ref={el => (this.container = el)}
-        style={this.styles.container}
+        style={{ ...this.defaultStyle, width: this.props.size, height: this.props.size }}
       >
         {this.props.children}
         <DraggableWrapper onMouseDown={this.handleMouseDown} onTouchStart={this.handleTouchStart}>
           {Draggable}
         </DraggableWrapper>
-      </svg>
+      </div>
     )
   }
 
@@ -143,61 +146,62 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
   private handleMouseDown = (e: React.MouseEvent<SVGElement>) => {
     pauseEvent(e)
     this.addEventListeners(false)
+
+    const { onMove } = this.props
+    onMove && onMove(this.getMovementData(absoluteMousePosition(e), true)!)
   }
 
   private handleTouchStart = (e: React.TouchEvent<SVGElement>) => {
     pauseEvent(e)
     this.addEventListeners(true)
+
+    const { onMove } = this.props
+    onMove && onMove(this.getMovementData(absoluteTouchPosition(e), true)!)
   }
 
   private handleMouseUp = (e: React.MouseEvent<SVGElement>) => {
     pauseEvent(e)
     this.removeEventListeners(false)
+
+    const { onMoveEnd } = this.props
+    onMoveEnd && onMoveEnd(this.getMovementData(absoluteMousePosition(e), false)!)
   }
 
   private handleTouchEnd = (e: React.TouchEvent<SVGElement>) => {
     pauseEvent(e)
     this.removeEventListeners(true)
+
+    const { onMoveEnd } = this.props
+    onMoveEnd && onMoveEnd(this.getMovementData(absoluteTouchPosition(e), false)!)
   }
 
   private handleMouseMove = (e: React.MouseEvent<SVGElement>) => {
     pauseEvent(e)
-    const { draggableOffset, onMove, radius } = this.props
-    if (!this.container || !onMove || typeof radius === 'undefined' || typeof draggableOffset === 'undefined') {
-      return null
-    }
-    const coordinates = calculateRadialPosition(
-      this.container,
-      this.center,
-      radius + draggableOffset,
-      absoluteMousePosition(e),
-    )
-    const value = angleToValue(
-      calculateAngleToPoint(this.container, this.center, absoluteMousePosition(e)),
-      this.props.minValue!,
-      this.props.maxValue!,
-    )
-    onMove({ coordinates, value })
+    const { onMove } = this.props
+    onMove && onMove(this.getMovementData(absoluteMousePosition(e), true)!)
   }
 
   private handleTouchMove = (e: React.TouchEvent<SVGElement>) => {
     pauseEvent(e)
+    const { onMove } = this.props
+    onMove && onMove(this.getMovementData(absoluteTouchPosition(e), true)!)
+  }
+
+  private getMovementData = (position: Point, pressed: boolean = false): MovementResponse | null => {
     const { draggableOffset, onMove, radius } = this.props
     if (!this.container || !onMove || typeof radius === 'undefined' || typeof draggableOffset === 'undefined') {
       return null
     }
-    const coordinates = calculateRadialPosition(
-      this.container,
-      this.center,
-      radius + draggableOffset,
-      absoluteTouchPosition(e),
-    )
-    const value = angleToValue(
-      calculateAngleToPoint(this.container, this.center, absoluteTouchPosition(e)),
-      this.props.minValue!,
-      this.props.maxValue!,
-    )
-    onMove({ coordinates, value })
+
+    const coordinates = calculateRadialPosition(this.container, this.center, radius + draggableOffset, position)
+
+    if (this.coordinates) {
+      const angleInRadians = calculateAngleBetweenPoints(this.center, this.coordinates, coordinates)
+      this.value += angleToValue(angleInRadians, this.props.minValue!, this.props.maxValue!)
+    }
+
+    this.coordinates = coordinates
+    return { coordinates, value: this.value, pressed }
   }
 }
 

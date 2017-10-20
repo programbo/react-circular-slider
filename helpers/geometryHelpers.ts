@@ -10,6 +10,9 @@ export const calculateOrigin = (container: Element, { x: offsetX, y: offsetY }: 
   return { x: containerX + offsetX, y: containerY + offsetY }
 }
 
+export const calculateAngleDelta = ({ x: x1, y: y1 }: Point, { x: x2, y: y2 }: Point) =>
+  Math.atan2(x1 * y2 - y1 * x2, x1 * x2 + y1 * y2)
+
 export const calculateAngleFromOrigin = ({ x: originX, y: originY }: Point, { x: pointX, y: pointY }: Point) => {
   let angleInRadians = Math.atan2(pointY - originY, pointX - originX)
   if (angleInRadians < 0) {
@@ -21,6 +24,12 @@ export const calculateAngleFromOrigin = ({ x: originX, y: originY }: Point, { x:
 export const calculateAngleToPoint = (container: Element, offset: Point, point: Point) => {
   const origin = calculateOrigin(container, offset)
   return calculateAngleFromOrigin(origin, point)
+}
+
+export const calculateAngleBetweenPoints = ({ x: originX, y: originY }: Point, {x: startX, y: startY}: Point, {x: endX, y: endY}: Point) => {
+  const startPoint = { x: startX - originX, y: startY - originY }
+  const endPoint = { x: endX - originX, y: endY - originY }
+  return calculateAngleDelta(startPoint, endPoint)
 }
 
 export const calculateRadialPosition = (container: Element, offset: Point, radius: number, point: Point) => {
