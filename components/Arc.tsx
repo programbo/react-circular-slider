@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { arc } from 'd3-shape'
 
-export interface DefaultRingProps {
+export interface ArcProps {
   startAngle?: number
   endAngle?: number
   padding: number
@@ -26,7 +26,7 @@ export default ({
   style,
   children,
   ...otherProps,
-}: DefaultRingProps): JSX.Element => {
+}: ArcProps): JSX.Element => {
   const arcData = arc()({
     innerRadius: radius - thickness / 2,
     outerRadius: radius + thickness / 2,

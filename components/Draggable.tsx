@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
 
-export interface DefaultDraggableProps {
+export interface DraggableProps {
   coordinates?: { x: number; y: number }
   pressed?: boolean
   rotation?: number
@@ -9,7 +9,7 @@ export interface DefaultDraggableProps {
   style?: React.CSSProperties
 }
 
-interface DefaultDraggableStyle {}
+interface DraggableStyle {}
 
 const defaultStyle: React.CSSProperties = {
   cursor: 'pointer',
@@ -21,13 +21,13 @@ const defaultStyle: React.CSSProperties = {
 const getSize = (show: boolean, pressed: boolean, defaultSize: number) =>
   show ? (pressed ? defaultSize * 1.2 : defaultSize) : 0
 
-const DefaultDraggable = ({
+const Draggable = ({
   coordinates,
   pressed = false,
   rotation = 0,
   size = 40,
   style,
-}: DefaultDraggableProps): JSX.Element | null => {
+}: DraggableProps): JSX.Element | null => {
   return (
     <div
       style={{
@@ -47,4 +47,4 @@ const DefaultDraggable = ({
   )
 }
 
-export default DefaultDraggable
+export default Draggable

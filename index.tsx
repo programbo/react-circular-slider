@@ -15,6 +15,7 @@ import {
   Point,
 } from './helpers/geometryHelpers'
 
+import DefaultRing, { ArcProps } from './components/Arc'
 import DraggableWrapper from './components/DraggableWrapper'
 
 export interface MovementResponse {
@@ -23,6 +24,7 @@ export interface MovementResponse {
   pressed: boolean
 }
 export interface SliderProps {
+  children?: any | any[]
   className?: string
   draggable?: any
   draggableOffset?: number
@@ -42,6 +44,7 @@ export interface SliderState {
 
 class CircularSlider extends React.Component<SliderProps, SliderState> {
   public static defaultProps: SliderProps = {
+    children: <DefaultRing radius={100} padding={10} size={40} thickness={20} />,
     draggable: undefined,
     draggableOffset: 0,
     maxValue: 100,

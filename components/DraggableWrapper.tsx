@@ -1,11 +1,10 @@
 import * as React from 'react'
-import DefaultDraggable from './DefaultDraggable'
+import DefaultDraggable from './Draggable'
 
-export interface DraggableProps {
-  size?: number
+export interface DraggableWrapperProps {
+  children?: any
   onMouseDown?: any
   onTouchStart?: any
-  children?: any
 }
 
 const defaultStyle: React.CSSProperties = {
@@ -14,7 +13,7 @@ const defaultStyle: React.CSSProperties = {
   left: 0,
 }
 
-const DraggableWrapper: React.StatelessComponent<DraggableProps> = ({
+const DraggableWrapper: React.StatelessComponent<DraggableWrapperProps> = ({
   children: Draggable = <DefaultDraggable size={40} />,
   onMouseDown,
   onTouchStart,
