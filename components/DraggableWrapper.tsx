@@ -14,7 +14,7 @@ const defaultStyle: React.CSSProperties = {
   left: 0,
 }
 
-const DraggableWrapper: React.SFC<DraggableProps> = ({
+const DraggableWrapper: React.StatelessComponent<DraggableProps> = ({
   children: Draggable = <DefaultDraggable size={40} />,
   onMouseDown,
   onTouchStart,

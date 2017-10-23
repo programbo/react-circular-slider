@@ -15,8 +15,6 @@ import {
   Point,
 } from './helpers/geometryHelpers'
 
-import DefaultRing from './components/DefaultRing'
-import DefaultDraggable from './components/DefaultDraggable'
 import DraggableWrapper from './components/DraggableWrapper'
 
 export interface MovementResponse {
