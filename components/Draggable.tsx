@@ -23,21 +23,19 @@ const defaultStyle: React.CSSProperties = {
   width: 40,
 }
 
-const Draggable = ({ coordinates, pressed = false, rotation = 0, size = 40, style }: DraggableProps): JSX.Element => {
-  return (
-    <div
-      style={{
-        ...defaultStyle,
-        ...style,
-        width: size,
-        height: size,
-        top: coordinates ? coordinates.y : 0,
-        left: coordinates ? coordinates.x : 0,
-        transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
-      }}
-      className={classnames({ pressed })}
-    />
-  )
-}
+const Draggable = ({ coordinates, pressed = false, rotation = 0, size = 40, style }: DraggableProps): JSX.Element => (
+  <div
+    style={{
+      ...defaultStyle,
+      ...style,
+      width: size,
+      height: size,
+      top: coordinates ? coordinates.y : 0,
+      left: coordinates ? coordinates.x : 0,
+      transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+    }}
+    className={classnames({ pressed })}
+  />
+)
 
 export default Draggable
