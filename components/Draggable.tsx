@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as classnames from 'classnames'
 
 export interface DraggableProps {
+  children?: any
   coordinates?: { x: number; y: number }
   pressed?: boolean
   rotation?: number
@@ -21,7 +22,14 @@ const defaultStyle: React.CSSProperties = {
   width: 40,
 }
 
-const Draggable = ({ coordinates, pressed = false, rotation = 0, size = 40, style }: DraggableProps): JSX.Element => (
+const Draggable = ({
+  children,
+  coordinates,
+  pressed = false,
+  rotation = 0,
+  size = 40,
+  style,
+}: DraggableProps): JSX.Element => (
   <div
     style={{
       ...defaultStyle,
@@ -33,7 +41,9 @@ const Draggable = ({ coordinates, pressed = false, rotation = 0, size = 40, styl
       transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
     }}
     className={classnames({ pressed })}
-  />
+  >
+    {children}
+  </div>
 )
 
 export default Draggable
