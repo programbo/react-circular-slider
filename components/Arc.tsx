@@ -28,8 +28,8 @@ export default ({
   ...otherProps,
 }: ArcProps): JSX.Element => {
   const arcData = arc()({
-    innerRadius: radius - thickness / 2,
-    outerRadius: radius + thickness / 2,
+    innerRadius: radius - thickness,
+    outerRadius: radius,
     startAngle: Math.PI * 2 * (startAngle / 360),
     endAngle: Math.PI * 2 * (endAngle / 360),
     padAngle: 0,

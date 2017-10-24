@@ -13,13 +13,11 @@ interface DraggableStyle {}
 
 const defaultStyle: React.CSSProperties = {
   backgroundColor: 'black',
-  borderRadius: 20,
+  borderRadius: '50%',
   boxSizing: 'border-box',
   cursor: 'pointer',
   height: 40,
   position: 'absolute',
-  transform: 'translate(-50%, -50%)',
-  transition: 'width 300ms ease, height 300ms ease, border-radius 300ms ease, background-color 300ms ease',
   width: 40,
 }
 

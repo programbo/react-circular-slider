@@ -88,7 +88,7 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
   }
 
   public componentDidMount() {
-    const startPosition = calculateRadialPositionFromValue(
+    this.coordinates = calculateRadialPositionFromValue(
       this.center!,
       this.props.radius! + this.props.draggableOffset!,
       this.props.value,
@@ -97,7 +97,7 @@ class CircularSlider extends React.Component<SliderProps, SliderState> {
     )
 
     this.props.onMove &&
-      this.props.onMove({ coordinates: startPosition, pressed: this.state.pressed, value: this.props.value! })
+      this.props.onMove({ coordinates: this.coordinates, pressed: this.state.pressed, value: this.props.value! })
   }
 
   public render() {
