@@ -8,6 +8,7 @@ export interface ArcProps {
   radius: number
   thickness: number
   style?: React.CSSProperties
+  mask?: JSX.Element
   [index: string]: any
 }
 
@@ -25,6 +26,7 @@ export default ({
   thickness = 20,
   style,
   children,
+  mask,
   ...otherProps,
 }: ArcProps): JSX.Element => {
   const arcData = arc()({
@@ -44,8 +46,18 @@ export default ({
       style={{ ...defaultStyle, ...style }}
       {...otherProps}
     >
-      <path d={arcData!} transform={`translate(${size / 2} ${size / 2})`} />
-      {children}
+      {mask && (
+        <defs>
+          <mask id="arcmask">
+            <rect width={size} height={size} fill="white" />
+            {mask}
+          </mask>
+        </defs>
+      )}
+      <g mask="url(#arcmask)">
+        <path d={arcData!} transform={`translate(${size / 2} ${size / 2})`} />
+        {children}
+      </g>
     </svg>
   )
 }
