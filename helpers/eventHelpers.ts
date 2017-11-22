@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export const pauseEvent = (e: React.MouseEvent<SVGElement> | React.TouchEvent<SVGElement>) => {
   e.stopPropagation()
-  // e.preventDefault()
+  e.preventDefault()
 }
 
 export const absoluteTouchPosition = (e: React.TouchEvent<SVGElement>) => ({
