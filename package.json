@@ -1,6 +1,6 @@
 {
   "name": "react-circular-slider",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "Flexible slider widget for React",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
