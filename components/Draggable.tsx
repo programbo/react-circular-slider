@@ -10,8 +10,6 @@ export interface DraggableProps {
   style?: React.CSSProperties
 }
 
-interface DraggableStyle {}
-
 const defaultStyle: React.CSSProperties = {
   backgroundColor: 'black',
   borderRadius: '50%',

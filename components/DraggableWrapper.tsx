@@ -11,6 +11,7 @@ const defaultStyle: React.CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
+  touchAction: 'none',
 }
 
 const DraggableWrapper: React.StatelessComponent<DraggableWrapperProps> = ({

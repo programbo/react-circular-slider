@@ -1,10 +1,5 @@
 import * as React from 'react'
 
-export const pauseEvent = (e: React.MouseEvent<SVGElement> | React.TouchEvent<SVGElement>) => {
-  e.stopPropagation()
-  e.preventDefault()
-}
-
 export const absoluteTouchPosition = (e: React.TouchEvent<SVGElement>) => ({
   x: e.changedTouches[0].pageX - (window.scrollX || window.pageXOffset),
   y: e.changedTouches[0].pageY - (window.scrollY || window.pageYOffset),
