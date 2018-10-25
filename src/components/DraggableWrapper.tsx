@@ -1,5 +1,5 @@
-import * as React from 'react'
-import DefaultDraggable from './Draggable'
+import React from 'react'
+import { Draggable as DefaultDraggable } from './Draggable'
 
 export interface DraggableWrapperProps {
   children?: any
@@ -14,13 +14,18 @@ const defaultStyle: React.CSSProperties = {
   touchAction: 'none',
 }
 
-const DraggableWrapper: React.StatelessComponent<DraggableWrapperProps> = ({
+export const DraggableWrapper = ({
   children: Draggable = <DefaultDraggable size={40} />,
   onMouseDown,
   onTouchStart,
-}) => {
+}: DraggableWrapperProps) => {
   return (
-    <div style={defaultStyle} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
+    <div
+      className="circular-slider__draggable-wrapper"
+      style={defaultStyle}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+    >
       {Draggable}
     </div>
   )

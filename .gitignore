@@ -58,3 +58,8 @@ typings/
 .env
 
 dist
+
+.DS_Store
+
+.rpt2_cache
+.rts2_cache*

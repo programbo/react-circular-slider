@@ -1,5 +1,4 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React from 'react'
 
 export interface DraggableProps {
   children?: any
@@ -20,7 +19,7 @@ const defaultStyle: React.CSSProperties = {
   width: 40,
 }
 
-const Draggable = ({
+export const Draggable = ({
   children,
   coordinates,
   pressed = false,
@@ -38,7 +37,7 @@ const Draggable = ({
       left: coordinates ? coordinates.x : 0,
       transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
     }}
-    className={classnames({ pressed })}
+    className={`circular-slider__draggable ${pressed ? 'pressed' : ''}`}
   >
     {children}
   </div>

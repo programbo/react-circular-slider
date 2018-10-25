@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { arc } from 'd3-shape'
+import React from 'react'
 
 export interface ArcProps {
   startAngle?: number
@@ -18,7 +18,7 @@ const defaultStyle: React.CSSProperties = {
   left: 0,
 }
 
-export default ({
+export const Arc = ({
   radius = 80,
   startAngle = 0,
   endAngle = 360,
@@ -27,7 +27,7 @@ export default ({
   style,
   children,
   mask,
-  ...otherProps,
+  ...otherProps
 }: ArcProps): JSX.Element => {
   const arcData = arc()({
     innerRadius: radius - thickness,
@@ -38,6 +38,9 @@ export default ({
   })
 
   const size = (padding + radius) * 2
+  const maskId = mask ? `arcmask-${new Date().getTime()}` : null
+  const maskAttribute = mask ? `url(#${maskId})` : null
+
   return (
     <svg
       height={size}
@@ -46,18 +49,20 @@ export default ({
       style={{ ...defaultStyle, ...style }}
       {...otherProps}
     >
-      {mask && (
+      {maskId && (
         <defs>
-          <mask id="arcmask">
+          <mask id={maskId}>
             <rect width={size} height={size} fill="white" />
             {mask}
           </mask>
         </defs>
       )}
-      <g mask="url(#arcmask)">
+      <g mask={maskAttribute!}>
         <path d={arcData!} transform={`translate(${size / 2} ${size / 2})`} />
         {children}
       </g>
     </svg>
   )
 }
+
+export default Arc
